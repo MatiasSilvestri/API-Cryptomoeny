@@ -1,3 +1,4 @@
+// create variables
 const spinner = document.querySelector('#spinner');
 const searchInput = document.querySelector('.data-search input');
 const searchBtn = document.querySelector('.data-search button');
@@ -5,7 +6,7 @@ const notFoundText = document.querySelector('#nodata');
 const tableData = document.querySelector('.tableBody');
 const bodyOverlay = document.querySelector('.body-overlay');
 
-const searchFun = (searchVal, apidata) => {
+const searchFun = (searchVal, apidata) => { // Search for cryptocurrency data in the CoingeckoAPI
     const searchmatchData = apidata.filter((e) => {
         if (e.id.toLowerCase().includes(searchVal.toLowerCase()) || e.symbol.toLowerCase().includes(searchVal.toLowerCase())) {
             return e;
@@ -15,12 +16,12 @@ const searchFun = (searchVal, apidata) => {
     showData(searchmatchData);
 
 }
-const loadData = async () => {
+const loadData = async () => { //Import the API
     const getData = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=1000&page=1&sparkline=false');
     const jsonData = await getData.json();
     showData(jsonData);
 
-    searchBtn.addEventListener('click', (e) => {
+    searchBtn.addEventListener('click', (e) => { //bubcion de boton "Search Cryptocurrency".
 
         const searchVal = searchInput.value;
         if (searchVal === "") {
@@ -35,7 +36,7 @@ const loadData = async () => {
 }
 
 
-const showData = (data) => {
+const showData = (data) => { //Print data on screen
     if (data.length === 0) {
         notFoundText.classList.remove('hidden');
         tableData.textContent = "";
@@ -45,7 +46,7 @@ const showData = (data) => {
         spinner.classList.add('hidden');
 
 
-        data.forEach(val => {
+        data.forEach(val => { //For organising data in the form of a list list 
             const allprofit = val.price_change_percentage_24h.toFixed(2);
 
             let dataItem = `<tr  onclick="moreInformation('${val.id}','${val.current_price}')" class="shadow-sm shadow-gray-700 hover:bg-gray-900 cursor-pointer">
